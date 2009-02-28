@@ -4,8 +4,9 @@ from Game import *
 
 if __name__ == "__main__":
    lGroup = pygame.sprite.Group
-   g = Game(800, 600)
-   l = Lettuce(0, 0)
+   g = Game("Lettuce Techno Tarry", 800, 600, 60)
+   l = Lettuce(400, 400)
    g.addGroup("lettuce")
    g.addSpriteToGroup(l, "lettuce")
+   g.newSong("baudOfPassion")
    g.mainLoop()

@@ -5,7 +5,7 @@ from Game import *
 class Lettuce (pygame.sprite.Sprite):
    def __init__ (self, x, y):
       pygame.sprite.Sprite.__init__(self)
-      self.image, self.rect  = imageLoad("lettuce.png")
+      self.image, self.rect  = imageLoad("bread.gif")
       self.position = (x,y)
 		
    def update (self, x, y):
