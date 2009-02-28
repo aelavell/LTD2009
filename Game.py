@@ -35,6 +35,8 @@ class Game:
       self.wins = 0
       self.losses = 0
       pygame.font.init()
+      self.FONT_SIZE = 60
+      self.font = pygame.font.Font(None, self.FONT_SIZE)
       pygame.mixer.init()
       pygame.init()
 
@@ -117,11 +119,9 @@ class Game:
             if event.key == K_x:
                self.addSpriteToGroup("lettuce", "sprites")
                self.playerOrder.append("lettuce")
-                  
             if event.key == K_z:
                self.addSpriteToGroup("bread", "sprites")
                self.playerOrder.append("bread")
-               
             if event.key == K_c:
                self.addSpriteToGroup("tomato", "sprites")
                self.playerOrder.append("tomato")
@@ -136,7 +136,6 @@ class Game:
          self.groups["sprites"].remove(sprite)
 
       self.chooseOrder()
-      print self.wins, self.losses
 
    def update (self):
       for group in self.groups.iteritems():
@@ -160,6 +159,10 @@ class Game:
       pygame.display.flip()
       self.clock.tick(self.maxFPS)
 
+   def displayScore (self):
+      score = pygame.font.Font.render(self.font, "Wins: %i Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (0,0,0))
+      self.screen.blit(score, (425, 20))
+
    def mainLoop (self):
       self.chooseOrder()
 
@@ -167,4 +170,5 @@ class Game:
          self.bgChange()
          self.screen.fill(self.bgcolor)
          self.handleEvents()
+         self.displayScore()
          self.update()
