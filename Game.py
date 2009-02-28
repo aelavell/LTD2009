@@ -21,6 +21,7 @@ class Game:
       self.clock = pygame.time.Clock()
       self.clock.tick(maxFPS)
       self.groups = {}
+      self.sprites = {}
       self.bgCount = 0
       self.bgIndex = 0
       self.bgColors =  [(255,0,0), (0,255,0), (0,0,255)]
@@ -32,6 +33,9 @@ class Game:
 
    def setCaption (self, caption):
       pygame.display.set_caption(caption)
+
+   def addSprite (self, spriteName, sprite):
+      self.sprites[spriteName] = sprite
 
    def addGroup (self, groupName):
       newGroup = pygame.sprite.Group()
@@ -70,9 +74,10 @@ class Game:
       for event in pygame.event.get():
          if event.type == QUIT:
             sys.exit()
-          
+         elif event.type == MOUSEBUTTONDOWN:
+            if event.button == 1:
+               self.sprites["lettuce"].toggleVisible()
 
-   
    def update (self):
       for group in self.groups.iteritems():
          group[1].update()
