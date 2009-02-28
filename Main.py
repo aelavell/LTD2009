@@ -8,8 +8,8 @@ if __name__ == "__main__":
    b = Entity("bread.gif", 400, 400) 
    t = Entity("tomato.gif", 400, 400)
 
-   l.toggleVisible()
-   t.toggleVisible()
+   #l.toggleVisible()
+   #t.toggleVisible()
    #b.toggleVisible()
 
    g.addSprite("bread", b)
@@ -27,9 +27,9 @@ if __name__ == "__main__":
    g.addGroup("sprites")
    g.addGroup("miniSprites")
 
-   g.addSpriteToGroup("bread", "sprites")
-   g.addSpriteToGroup("lettuce", "sprites")
-   g.addSpriteToGroup("tomato", "sprites")
+   #g.addSpriteToGroup("bread", "sprites")
+   #g.addSpriteToGroup("lettuce", "sprites")
+   #g.addSpriteToGroup("tomato", "sprites")
 
    g.addMiniSpriteToGroup("miniBread", "miniSprites")
    g.addMiniSpriteToGroup("miniLettuce", "miniSprites")

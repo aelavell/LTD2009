@@ -107,12 +107,22 @@ class Game:
             sys.exit()
          elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
-               self.sprites["lettuce"].changeCoords(425, 425)
-               self.sprites["lettuce"].toggleVisible()
+               if self.groups["sprites"].has(self.sprites["lettuce"]):
+                  self.removeSpriteFromGroup("lettuce", "sprites")
+               else:
+                  self.addSpriteToGroup("lettuce", "sprites")
+                  
             if event.button == 2:
-               self.sprites["bread"].toggleVisible()
+               if self.groups["sprites"].has(self.sprites["bread"]):
+                  self.removeSpriteFromGroup("bread", "sprites")
+               else:
+                  self.addSpriteToGroup("bread", "sprites")
+               
             if event.button == 3:
-               self.sprites["tomato"].toggleVisible()
+               if self.groups["sprites"].has(self.sprites["tomato"]):
+                  self.removeSpriteFromGroup("tomato", "sprites")
+               else:
+                  self.addSpriteToGroup("tomato", "sprites")
 
    def update (self):
       for group in self.groups.iteritems():
