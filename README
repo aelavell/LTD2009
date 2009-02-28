@@ -1,0 +1,26 @@
+Lettuce Trance Dance 2009
+-- Allan Lavell (flummoxed) --
+-- alavell@gmail.com --
+
+Intro
+I was listening to some trance. Then I found out that the subject of the competition was lettuce. Then I thought of Lettuce Trance Dance. The changing background colour is inspired by this website: www.paperrad.org. It's really intimidating, but check out some of the animations, they're awesome.
+
+How to Play
+Make sure your speakers are on, pygame's mixer is working (it's not working on arch linux for me right now, I dunno why). This game is much more fun with the included music.
+
+On the top left you'll see a random combo of three things: lettuce, bread, and tomato. You have to try to match them up as quickly as you can in the right order. The keys are as follows:
+- z: bread
+- x: lettuce
+- c: tomato
+So, if the order on the top was: lettuce, bread, tomato, you would hit x,z,c. As soon as you've hit three of them, the combo will disappear, and if your order was correct, your wins will be incremented. Otherwise your losses will be incremented. Now you have to try again with a new combo.
+
+Do this ad infinitum. It's fun... for a while. And it's tough. Try to do it quick!
+
+Licenses and stuff
+All the gfx were made by me. 
+
+Everything I made is under the GNU GPL.
+
+The song is called Baud of Passion, and it's by x|k (pronounced "kik"). It's released under the Creative Commons License (http://creativecommons.org/licenses/by-nc-sa/2.0/), and I got it from http://www.gratisvibes.com. 
+
+Have fun!
