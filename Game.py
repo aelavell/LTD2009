@@ -1,7 +1,8 @@
 import pygame 
 from pygame.locals import *
 import sys, os
-import random
+import random 
+from Entity import *
 
 def imageLoad (name):
       try:
@@ -22,6 +23,7 @@ class Game:
       self.clock.tick(maxFPS)
       self.groups = {}
       self.sprites = {}
+      self.miniSprites = {}
       self.bgCount = 0
       self.bgIndex = 0
       self.bgColors =  [(255,0,0), (0,255,0), (0,0,255)]
@@ -34,6 +36,11 @@ class Game:
    def setCaption (self, caption):
       pygame.display.set_caption(caption)
 
+   # miniSprites are used to display the order of what you gotta
+   # put shit in at the top of the game
+   def addMiniSprite (self, spriteName, sprite):
+      self.miniSprites[spriteName] = sprite
+
    def addSprite (self, spriteName, sprite):
       self.sprites[spriteName] = sprite
 
@@ -41,8 +48,17 @@ class Game:
       newGroup = pygame.sprite.Group()
       self.groups[groupName] = newGroup
 
+   def addMiniSpriteToGroup (self, miniSprite, group):
+      self.groups[group].add(self.miniSprites[miniSprite])
+
+   def removeMiniSpriteFromGroup (self, miniSprite, group):
+      self.groups[group].remove(self.miniSprites[miniSprite])
+
    def addSpriteToGroup (self, sprite, group):
-      self.groups[group].add(sprite)
+      self.groups[group].add(self.sprites[sprite])
+
+   def removeSpriteFromGroup (self, sprite, group):
+      self.groups[group].remove(self.sprites[sprite])
 
    def newSong (self, filename):
       pygame.mixer.music.load(filename)
@@ -61,6 +77,7 @@ class Game:
       self.bgCount += 1
 
       if self.bgCount == 60:    
+         # bgIndex sets the caption (to red!, blue! or green!)
          self.bgIndex += 1
 
          if self.bgIndex > 2:
@@ -70,13 +87,32 @@ class Game:
          self.bgcolor = self.bgColors[self.bgIndex] 
          self.bgCount = 0
 
+   def chooseOrder (self):
+      # The order of the 3 elements is chosen randomly
+      # Player must put them together in the same way
+
+      # This will be random each time
+      keyList = self.miniSprites.keys()
+      random.shuffle(keyList)
+      xi = 25
+      y = 25
+
+      for sprite in keyList:
+         self.miniSprites[sprite].changeCoords(xi, y)
+         xi += 50
+
    def handleEvents (self):
       for event in pygame.event.get():
          if event.type == QUIT:
             sys.exit()
          elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
+               self.sprites["lettuce"].changeCoords(425, 425)
                self.sprites["lettuce"].toggleVisible()
+            if event.button == 2:
+               self.sprites["bread"].toggleVisible()
+            if event.button == 3:
+               self.sprites["tomato"].toggleVisible()
 
    def update (self):
       for group in self.groups.iteritems():
@@ -86,6 +122,8 @@ class Game:
       pygame.display.flip()
 
    def mainLoop (self):
+      self.chooseOrder()
+
       while 1:
          self.bgChange()
          self.screen.fill(self.bgcolor)
