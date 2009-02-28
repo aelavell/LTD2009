@@ -67,10 +67,10 @@ class Game:
 
    def newSong (self, filename):
       pygame.mixer.music.load(filename)
-      self.playSong(-1) 
+      self.playSong() 
 
    def playSong (self):
-      pygame.mixer.music.play()
+      pygame.mixer.music.play(-1)
 
    def pauseSong (self):
       pygame.mixer.music.pause()
