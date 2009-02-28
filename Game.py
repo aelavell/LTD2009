@@ -32,6 +32,8 @@ class Game:
       self.bgColors =  [(255,0,0), (0,255,0), (0,0,255)]
       self.captions = ["red!", "green!", "blue!"]
       self.bgcolor = self.bgColors[0]
+      self.wins = 0
+      self.losses = 0
       pygame.font.init()
       pygame.mixer.init()
       pygame.init()
@@ -113,25 +115,28 @@ class Game:
             sys.exit()
          elif event.type == MOUSEBUTTONDOWN:
             if event.button == 1:
-               if self.groups["sprites"].has(self.sprites["lettuce"]):
-                  self.removeSpriteFromGroup("lettuce", "sprites")
-               else:
-                  self.addSpriteToGroup("lettuce", "sprites")
-                  self.playerOrder.append("lettuce")
+               self.addSpriteToGroup("lettuce", "sprites")
+               self.playerOrder.append("lettuce")
                   
             if event.button == 2:
-               if self.groups["sprites"].has(self.sprites["bread"]):
-                  self.removeSpriteFromGroup("bread", "sprites")
-               else:
-                  self.addSpriteToGroup("bread", "sprites")
-                  self.playerOrder.append("bread")
+               self.addSpriteToGroup("bread", "sprites")
+               self.playerOrder.append("bread")
                
             if event.button == 3:
-               if self.groups["sprites"].has(self.sprites["tomato"]):
-                  self.removeSpriteFromGroup("tomato", "sprites")
-               else:
-                  self.addSpriteToGroup("tomato", "sprites")
-                  self.playerOrder.append("tomato")
+               self.addSpriteToGroup("tomato", "sprites")
+               self.playerOrder.append("tomato")
+
+   def endRound (self, victory):
+      if victory == True:
+         self.wins += 1
+      else:
+         self.losses += 1
+
+      for sprite in self.groups["sprites"]:
+         self.groups["sprites"].remove(sprite)
+
+      self.chooseOrder()
+      print self.wins, self.losses
 
    def update (self):
       for group in self.groups.iteritems():
@@ -141,20 +146,17 @@ class Game:
 
       if len(self.playerOrder) == self.MAX_ORDER:
          i = 0 
-         win = True
+         victory = True
 
          while i < self.MAX_ORDER:
             if self.playerOrder[i] == self.order[i]:
                pass
             else:
-               win = False
+               victory = False
                break
             i += 1
 
-         if win == True:
-            print "you win"
-         else:
-            print "fcuk you"
+         self.endRound(victory)
 
       pygame.display.flip()
       self.clock.tick(self.maxFPS)
