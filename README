@@ -8,6 +8,8 @@ I was listening to some trance. Then I found out that the subject of the competi
 How to Play
 Make sure your speakers are on, pygame's mixer is working (it's not working on arch linux for me right now, I dunno why). This game is much more fun with the included music.
 
+python ltd.py should run the game
+
 On the top left you'll see a random combo of three things: lettuce, bread, and tomato. You have to try to match them up as quickly as you can in the right order. The keys are as follows:
 - z: bread
 - x: lettuce

@@ -208,9 +208,9 @@ class Game:
       self.clock.tick(self.maxFPS)
 
    def displayScore (self):
-      score = pygame.font.Font.render(self.font, "Wins: %i Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (255,255,255))
+      score = pygame.font.Font.render(self.font, "Wins: %i   Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (255,255,255))
       avgSpeed = pygame.font.Font.render(self.font, "Avg Speed: %i frames per attempt" %(self.avgSpeed), self.FONT_SIZE / 2, (255,255,255))
-      self.screen.blit(score, (425, 20))
+      self.screen.blit(score, (325, 20))
       self.screen.blit(avgSpeed, (10, 555))
 
    def mainLoop (self):
