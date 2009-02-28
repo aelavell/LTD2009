@@ -20,9 +20,9 @@ if __name__ == "__main__":
    ml = Entity("miniLettuce.gif", 75, 25)
    mt = Entity("miniTomato.gif", 25, 25)
 
-   g.addMiniSprite("miniBread", mb)
-   g.addMiniSprite("miniLettuce", ml)
-   g.addMiniSprite("miniTomato", mt)
+   g.addMiniSprite("bread", mb)
+   g.addMiniSprite("lettuce", ml)
+   g.addMiniSprite("tomato", mt)
 
    g.addGroup("sprites")
    g.addGroup("miniSprites")
@@ -31,9 +31,9 @@ if __name__ == "__main__":
    #g.addSpriteToGroup("lettuce", "sprites")
    #g.addSpriteToGroup("tomato", "sprites")
 
-   g.addMiniSpriteToGroup("miniBread", "miniSprites")
-   g.addMiniSpriteToGroup("miniLettuce", "miniSprites")
-   g.addMiniSpriteToGroup("miniTomato", "miniSprites")
+   g.addMiniSpriteToGroup("bread", "miniSprites")
+   g.addMiniSpriteToGroup("lettuce", "miniSprites")
+   g.addMiniSpriteToGroup("tomato", "miniSprites")
    
    g.newSong("baudOfPassion.ogg")
    g.mainLoop()

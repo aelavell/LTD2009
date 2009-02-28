@@ -24,6 +24,9 @@ class Game:
       self.groups = {}
       self.sprites = {}
       self.miniSprites = {}
+      self.order = []
+      self.playerOrder = []
+      self.MAX_ORDER = 3
       self.bgCount = 0
       self.bgIndex = 0
       self.bgColors =  [(255,0,0), (0,255,0), (0,0,255)]
@@ -96,9 +99,12 @@ class Game:
       random.shuffle(keyList)
       xi = 25
       y = 25
+      self.order = []
+      self.playerOrder = []
 
       for sprite in keyList:
          self.miniSprites[sprite].changeCoords(xi, y)
+         self.order.append(sprite)
          xi += 50
 
    def handleEvents (self):
@@ -111,23 +117,44 @@ class Game:
                   self.removeSpriteFromGroup("lettuce", "sprites")
                else:
                   self.addSpriteToGroup("lettuce", "sprites")
+                  self.playerOrder.append("lettuce")
                   
             if event.button == 2:
                if self.groups["sprites"].has(self.sprites["bread"]):
                   self.removeSpriteFromGroup("bread", "sprites")
                else:
                   self.addSpriteToGroup("bread", "sprites")
+                  self.playerOrder.append("bread")
                
             if event.button == 3:
                if self.groups["sprites"].has(self.sprites["tomato"]):
                   self.removeSpriteFromGroup("tomato", "sprites")
                else:
                   self.addSpriteToGroup("tomato", "sprites")
+                  self.playerOrder.append("tomato")
 
    def update (self):
       for group in self.groups.iteritems():
          group[1].update()
          group[1].draw(self.screen)
+         
+
+      if len(self.playerOrder) == self.MAX_ORDER:
+         i = 0 
+         win = True
+
+         while i < self.MAX_ORDER:
+            if self.playerOrder[i] == self.order[i]:
+               pass
+            else:
+               win = False
+               break
+            i += 1
+
+         if win == True:
+            print "you win"
+         else:
+            print "fcuk you"
 
       pygame.display.flip()
       self.clock.tick(self.maxFPS)
