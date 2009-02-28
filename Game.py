@@ -40,20 +40,8 @@ class Game:
    def addSpriteToGroup (self, sprite, group):
       self.groups[group].add(sprite)
 
-   def update (self):
-      for group in self.groups.iteritems():
-         group[1].update(400, 400)
-         group[1].draw(self.screen)
-
-      pygame.display.flip()
-
-   def handleEvents (self):
-      for event in pygame.event.get():
-         if event.type == QUIT:
-            sys.exit()
-
    def newSong (self, filename):
-      pygame.mixer.music.load(filename + ".mp3")
+      pygame.mixer.music.load(filename)
       self.playSong() 
 
    def playSong (self):
@@ -66,16 +54,31 @@ class Game:
       pygame.mixer.music.unpause()
 
    def bgChange (self):
-         self.bgCount += 1
-         if self.bgCount == 60:
-            
-            self.bgIndex += 1
-            if self.bgIndex > 2:
-               self.bgIndex = 0
+      self.bgCount += 1
 
-            self.setCaption(self.captions[self.bgIndex])
-            self.bgcolor = self.bgColors[self.bgIndex] 
-            self.bgCount = 0
+      if self.bgCount == 60:    
+         self.bgIndex += 1
+
+         if self.bgIndex > 2:
+            self.bgIndex = 0
+            
+         self.setCaption(self.captions[self.bgIndex])
+         self.bgcolor = self.bgColors[self.bgIndex] 
+         self.bgCount = 0
+
+   def handleEvents (self):
+      for event in pygame.event.get():
+         if event.type == QUIT:
+            sys.exit()
+          
+
+   
+   def update (self):
+      for group in self.groups.iteritems():
+         group[1].update()
+         group[1].draw(self.screen)
+
+      pygame.display.flip()
 
    def mainLoop (self):
       while 1:

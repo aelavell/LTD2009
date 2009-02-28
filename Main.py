@@ -1,12 +1,13 @@
 import pygame
-from Lettuce import *
+from Sprite import *
 from Game import *
 
 if __name__ == "__main__":
-   lGroup = pygame.sprite.Group
    g = Game("Lettuce Techno Tarry", 800, 600, 60)
-   l = Lettuce(400, 400)
-   g.addGroup("lettuce")
-   g.addSpriteToGroup(l, "lettuce")
-   g.newSong("baudOfPassion")
+   l = Sprite("lettuce.gif", 400, 400)
+   b = Sprite("bread.gif", 400, 400) 
+   g.addGroup("sprites")
+   g.addSpriteToGroup(b, "sprites")
+   g.addSpriteToGroup(l, "sprites")
+   g.newSong("baudOfPassion.ogg")
    g.mainLoop()
