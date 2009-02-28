@@ -113,16 +113,16 @@ class Game:
       for event in pygame.event.get():
          if event.type == QUIT:
             sys.exit()
-         elif event.type == MOUSEBUTTONDOWN:
-            if event.button == 1:
+         elif event.type == KEYDOWN:
+            if event.key == K_x:
                self.addSpriteToGroup("lettuce", "sprites")
                self.playerOrder.append("lettuce")
                   
-            if event.button == 2:
+            if event.key == K_z:
                self.addSpriteToGroup("bread", "sprites")
                self.playerOrder.append("bread")
                
-            if event.button == 3:
+            if event.key == K_c:
                self.addSpriteToGroup("tomato", "sprites")
                self.playerOrder.append("tomato")
 
@@ -142,7 +142,6 @@ class Game:
       for group in self.groups.iteritems():
          group[1].update()
          group[1].draw(self.screen)
-         
 
       if len(self.playerOrder) == self.MAX_ORDER:
          i = 0 
