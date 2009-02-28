@@ -3,7 +3,7 @@ from Entity import *
 from Game import *
 
 if __name__ == "__main__":
-   g = Game("Lettuce Trance Dance 2009", 800, 600, 1)
+   g = Game("Lettuce Trance Dance 2009", 800, 600, 90)
    l = Entity("lettuce.gif", 400, 400)
    b = Entity("bread.gif", 400, 400) 
    t = Entity("tomato.gif", 400, 400)

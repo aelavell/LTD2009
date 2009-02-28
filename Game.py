@@ -20,7 +20,7 @@ class Game:
       self.screen = pygame.display.set_mode((screenWidth, screenHeight))
       self.setCaption(caption)
       self.clock = pygame.time.Clock()
-      self.clock.tick(maxFPS)
+      self.maxFPS = maxFPS
       self.groups = {}
       self.sprites = {}
       self.miniSprites = {}
@@ -120,6 +120,7 @@ class Game:
          group[1].draw(self.screen)
 
       pygame.display.flip()
+      self.clock.tick(self.maxFPS)
 
    def mainLoop (self):
       self.chooseOrder()
