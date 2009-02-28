@@ -21,6 +21,9 @@ class Game:
       self.setCaption(caption)
       self.clock = pygame.time.Clock()
       self.maxFPS = maxFPS
+      self.framesElapsed = 0
+      self.speedList = []
+      self.avgSpeed = 0
       self.groups = {}
       self.sprites = {}
       self.miniSprites = {}
@@ -99,6 +102,7 @@ class Game:
       # Player must put them together in the same way
 
       # This will be random each time
+      
       keyList = self.miniSprites.keys()
       random.shuffle(keyList)
       xi = 25
@@ -125,17 +129,44 @@ class Game:
             if event.key == K_c:
                self.addSpriteToGroup("tomato", "sprites")
                self.playerOrder.append("tomato")
+            if event.key == K_RETURN:
+               self.endGame()
+
+   def calcAvgSpeed (self):
+      self.speedList.append(self.framesElapsed)
+      totalSpeed = 0
+      for speed in self.speedList:
+         totalSpeed += speed
+
+      self.avgSpeed = totalSpeed / len(self.speedList)
+      self.framesElapsed = 0
 
    def endRound (self, victory):
       if victory == True:
          self.wins += 1
       else:
          self.losses += 1
+   
+      self.calcAvgSpeed() 
 
       for sprite in self.groups["sprites"]:
          self.groups["sprites"].remove(sprite)
-
+      
       self.chooseOrder()
+
+   def endGame (self):
+      while 1:
+         self.screen.fill((0,0,0))
+         self.displayScore()
+         exitMsg = pygame.font.Font.render(self.font, "Game Over. Press Enter to Quit.", self.FONT_SIZE, (255,255,255))
+         self.screen.blit(exitMsg, (65, 275))
+         pygame.display.flip()
+         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+               if event.key == K_RETURN:
+                  sys.exit()
+            if event.type == QUIT:
+               sys.exit()
 
    def update (self):
       for group in self.groups.iteritems():
@@ -156,12 +187,15 @@ class Game:
 
          self.endRound(victory)
 
+      self.framesElapsed += 1
       pygame.display.flip()
       self.clock.tick(self.maxFPS)
 
    def displayScore (self):
-      score = pygame.font.Font.render(self.font, "Wins: %i Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (0,0,0))
+      score = pygame.font.Font.render(self.font, "Wins: %i Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (255,255,255))
+      avgSpeed = pygame.font.Font.render(self.font, "Avg Speed: %i frames per attempt" %(self.avgSpeed), self.FONT_SIZE / 2, (255,255,255))
       self.screen.blit(score, (425, 20))
+      self.screen.blit(avgSpeed, (10, 555))
 
    def mainLoop (self):
       self.chooseOrder()
@@ -172,3 +206,4 @@ class Game:
          self.handleEvents()
          self.displayScore()
          self.update()
+         
