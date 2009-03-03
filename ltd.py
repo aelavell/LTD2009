@@ -20,6 +20,13 @@ from Game import *
 
 if __name__ == "__main__":
    g = Game("Lettuce Trance Dance 2009", 800, 500, 90)
+   difficulty = g.menu()
+
+   # for easy
+   g.setMaxOrder(3)
+
+   g.addGroup("sprites")
+   g.addGroup("miniSprites")
 
    l = Entity("lettuce.gif", 450, 300)
    b = Entity("bread.gif", 300, 300) 
@@ -37,12 +44,36 @@ if __name__ == "__main__":
    g.addMiniSprite("lettuce", ml)
    g.addMiniSprite("tomato", mt)
 
-   g.addGroup("sprites")
-   g.addGroup("miniSprites")
-
    g.addMiniSpriteToGroup("bread", "miniSprites")
    g.addMiniSpriteToGroup("lettuce", "miniSprites")
    g.addMiniSpriteToGroup("tomato", "miniSprites")
+
+   # Will be used if difficult is changed from easy
+   bu = Entity("butter.gif", 350, 300)
+   mbu = Entity("miniButter.gif", 175, 25)
+
+   if difficulty == "medium":
+      g.setMaxOrder(4)
+      g.addSprite("butter", bu)
+      g.addMiniSprite("butter", mbu)
+      g.addMiniSpriteToGroup("butter", "miniSprites")
+
+   elif difficulty == "hard":
+      g.setMaxOrder(5)
+      g.addSprite("butter", bu)
+      g.addMiniSprite("butter", mbu)
+      g.addMiniSpriteToGroup("butter", "miniSprites")
+
+      mb1 = Entity("miniBread.gif", 225, 25)
+      b1 = Entity("bread.gif", 500, 300)
+      g.addMiniSprite("bread1", mb1) 
+      g.addSprite("bread1", b1)
+      g.addMiniSprite("bread1", mb1) 
+      g.addMiniSpriteToGroup("bread1", "miniSprites")
+
+   elif difficulty == "retarded":
+      pass
+
    
    g.newSong("baudOfPassion.ogg")
    g.mainLoop()

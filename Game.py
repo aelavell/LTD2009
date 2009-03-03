@@ -45,7 +45,7 @@ class Game:
       self.miniSprites = {}
       self.order = []
       self.playerOrder = []
-      self.MAX_ORDER = 3
+      self.MAX_ORDER = 0 
       self.bgCount = 0
       self.bgIndex = 0
       self.bgColors =  [(255,0,0), (0,255,0), (0,0,255)]
@@ -58,6 +58,9 @@ class Game:
       self.font = pygame.font.Font(None, self.FONT_SIZE)
       pygame.mixer.init()
       pygame.init()
+
+   def setMaxOrder (self, max):
+      self.MAX_ORDER = max
 
    def setCaption (self, caption):
       pygame.display.set_caption(caption)
@@ -136,15 +139,22 @@ class Game:
          if event.type == QUIT:
             sys.exit()
          elif event.type == KEYDOWN:
+            if event.key == K_z:
+               if self.groups["sprites"].has(self.sprites["bread"]):
+                  self.addSpriteToGroup("bread1", "sprites")
+                  self.playerOrder.append("bread1")
+               else:
+                  self.addSpriteToGroup("bread", "sprites")
+                  self.playerOrder.append("bread")
             if event.key == K_x:
                self.addSpriteToGroup("lettuce", "sprites")
                self.playerOrder.append("lettuce")
-            if event.key == K_z:
-               self.addSpriteToGroup("bread", "sprites")
-               self.playerOrder.append("bread")
             if event.key == K_c:
                self.addSpriteToGroup("tomato", "sprites")
                self.playerOrder.append("tomato")
+            if event.key == K_v and self.MAX_ORDER > 3:
+               self.addSpriteToGroup("butter", "sprites")
+               self.playerOrder.append("butter")
             if event.key == K_RETURN:
                self.endGame()
 
@@ -167,16 +177,55 @@ class Game:
 
       for sprite in self.groups["sprites"]:
          self.groups["sprites"].remove(sprite)
-      
+
       self.chooseOrder()
 
+   def renderFont (self, msg, color):
+      return pygame.font.Font.render(self.font, msg, self.FONT_SIZE, color)
+  
+   def menu (self):
+      menuTitle = self.renderFont("Lettuce Trance Dance 2009", (255,255,0))
+      a = self.renderFont("A: Easy", (255,255,255))
+      b = self.renderFont("B: Medium", (0,0,255))
+      c = self.renderFont("C: Hard", (0,0,0))
+      r = self.renderFont("R: Retarded", (0,255,255))
+      h = self.renderFont("H: Help!", (255,255,255))
+
+      while 1:
+         self.screen.fill((0,255,0))
+         self.screen.blit(menuTitle, (100, 25))
+         self.screen.blit(a, (100, 100))
+         self.screen.blit(b, (100, 160))
+         self.screen.blit(c, (100, 220))
+         self.screen.blit(r, (100, 280))
+         self.screen.blit(h, (100, 340))
+         pygame.display.flip()
+
+         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+               if event.type == QUIT:
+                  sys.exit()
+               if event.type == KEYDOWN:
+                  if event.key == K_a:
+                     return "easy"
+                  elif event.key == K_b:
+                     return "medium"
+                  elif event.key == K_c:
+                     return "hard"
+                  elif event.key == K_r:
+                     return "retarded"
+                  elif event.key == K_h:
+                     pass
+
    def endGame (self):
+      exitMsg = self.renderFont("Game Over. Press Enter to Quit.", (255,255,255))
+
       while 1:
          self.screen.fill((0,0,0))
          self.displayScore()
-         exitMsg = pygame.font.Font.render(self.font, "Game Over. Press Enter to Quit.", self.FONT_SIZE, (255,255,255))
          self.screen.blit(exitMsg, (65, 275))
          pygame.display.flip()
+
          for event in pygame.event.get():
             if event.type == KEYDOWN:
                if event.key == K_RETURN:
@@ -194,7 +243,10 @@ class Game:
          victory = True
 
          while i < self.MAX_ORDER:
-            if self.playerOrder[i] == self.order[i]:
+            # special bread case
+            if (self.playerOrder[i] == "bread" or self.playerOrder[i] == "bread1") and (self.order[i] == "bread" or self.order[i] == "bread1"):
+               pass
+            elif self.playerOrder[i] == self.order[i]:
                pass
             else:
                victory = False
@@ -208,7 +260,7 @@ class Game:
       self.clock.tick(self.maxFPS)
 
    def displayScore (self):
-      score = pygame.font.Font.render(self.font, "Wins: %i   Losses: %i" %(self.wins, self.losses), self.FONT_SIZE, (255,255,255))
+      score = self.renderFont("Wins: %i   Losses: %i" %(self.wins, self.losses), (255,255,255))
       avgSpeed = pygame.font.Font.render(self.font, "Avg Speed: %i frames per attempt" %(self.avgSpeed), self.FONT_SIZE / 2, (255,255,255))
       self.screen.blit(score, (325, 20))
       self.screen.blit(avgSpeed, (10, 455))
