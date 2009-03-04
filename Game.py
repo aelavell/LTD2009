@@ -187,18 +187,18 @@ class Game:
       menuTitle = self.renderFont("Lettuce Trance Dance 2009", (255,255,0))
       a = self.renderFont("A: Easy", (255,255,255))
       b = self.renderFont("B: Medium", (0,0,255))
-      c = self.renderFont("C: Hard", (0,0,0))
+      c = self.renderFont("C: Hard", (255,0,0))
       r = self.renderFont("R: Retarded", (0,255,255))
       h = self.renderFont("H: Help!", (255,255,255))
 
       while 1:
-         self.screen.fill((0,255,0))
+         self.screen.fill((0,0,0))
          self.screen.blit(menuTitle, (100, 25))
          self.screen.blit(a, (100, 100))
          self.screen.blit(b, (100, 160))
          self.screen.blit(c, (100, 220))
-         self.screen.blit(r, (100, 280))
-         self.screen.blit(h, (100, 340))
+         #self.screen.blit(r, (100, 280))
+         #self.screen.blit(h, (100, 340))
          pygame.display.flip()
 
          for event in pygame.event.get():
@@ -213,7 +213,8 @@ class Game:
                   elif event.key == K_c:
                      return "hard"
                   elif event.key == K_r:
-                     return "retarded"
+                     #return "retarded"
+                     pass
                   elif event.key == K_h:
                      pass
 
@@ -223,7 +224,7 @@ class Game:
       while 1:
          self.screen.fill((0,0,0))
          self.displayScore()
-         self.screen.blit(exitMsg, (65, 275))
+         self.screen.blit(exitMsg, (65, 225))
          pygame.display.flip()
 
          for event in pygame.event.get():
