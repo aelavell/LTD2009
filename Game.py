@@ -74,7 +74,7 @@ class Game:
       self.sprites[spriteName] = sprite
 
    def addGroup (self, groupName):
-      newGroup = pygame.sprite.Group()
+      newGroup = pygame.sprite.OrderedUpdates()
       self.groups[groupName] = newGroup
 
    def addMiniSpriteToGroup (self, miniSprite, group):
