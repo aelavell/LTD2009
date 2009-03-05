@@ -74,6 +74,9 @@ if __name__ == "__main__":
    elif difficulty == "retarded":
       pass
 
+
+   g.loadSound("yes.ogg", "yes")
+   g.loadSound("no.ogg", "no")
    
    g.newSong("baudOfPassion.ogg")
    g.mainLoop()

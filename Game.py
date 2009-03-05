@@ -43,6 +43,7 @@ class Game:
       self.groups = {}
       self.sprites = {}
       self.miniSprites = {}
+      self.sounds = {}
       self.order = []
       self.playerOrder = []
       self.MAX_ORDER = 0 
@@ -88,6 +89,13 @@ class Game:
 
    def removeSpriteFromGroup (self, sprite, group):
       self.groups[group].remove(self.sprites[sprite])
+
+   def loadSound (self, filename, name):
+      self.sounds[name] = pygame.mixer.Sound(filename)
+      print self.sounds
+
+   def playSound (self, name):
+      pygame.mixer.Sound.play(self.sounds[name])
 
    def newSong (self, filename):
       pygame.mixer.music.load(filename)
@@ -140,7 +148,7 @@ class Game:
             sys.exit()
          elif event.type == KEYDOWN:
             if event.key == K_z:
-               if self.groups["sprites"].has(self.sprites["bread"]):
+               if self.groups["sprites"].has(self.sprites["bread"]) and self.MAX_ORDER == 5:
                   self.addSpriteToGroup("bread1", "sprites")
                   self.playerOrder.append("bread1")
                else:
@@ -170,8 +178,10 @@ class Game:
    def endRound (self, victory):
       if victory == True:
          self.wins += 1
+         self.playSound("yes")
       else:
          self.losses += 1
+         self.playSound("no")
    
       self.calcAvgSpeed() 
 
